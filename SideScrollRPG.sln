@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{D1306571-5C66-666D-08AA-EA6E52C67EBD}") = "SideScrollRPG", "Assembly-CSharp.csproj", "{7F24E83F-269B-9773-B5AE-1E6DF5EF3E54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F24E83F-269B-9773-B5AE-1E6DF5EF3E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F24E83F-269B-9773-B5AE-1E6DF5EF3E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F24E83F-269B-9773-B5AE-1E6DF5EF3E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F24E83F-269B-9773-B5AE-1E6DF5EF3E54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
