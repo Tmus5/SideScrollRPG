@@ -22,10 +22,11 @@ public class BoardManager : MonoBehaviour {
 
     public void CreateFloor()
     {
+        
         for (var i = 0; i < columns; i++) {
             GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
 
-            Instantiate(toInstantiate, new Vector3(i, 0, 0), Quaternion.identity);
+            Instantiate(toInstantiate, new Vector3(i, 0, 0f), Quaternion.identity);
         }
     }
 }
