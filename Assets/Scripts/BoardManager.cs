@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour {
 
+	public GameObject[] floorTiles;
+
 	// Use this for initialization
 	void Start () {
 		

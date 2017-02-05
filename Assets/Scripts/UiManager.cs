@@ -8,6 +8,7 @@ public class UiManager : MonoBehaviour {
 	public int damageDealt = 10;
 	public int level = 1;
 
+
 	// Use this for initialization
 	void Start () {
 		
