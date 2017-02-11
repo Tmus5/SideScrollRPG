@@ -7,9 +7,9 @@ using Random = UnityEngine.Random;
 public class BoardManager : MonoBehaviour {
 
 	public GameObject[] floorTiles;
-    public Camera camera;
-    public int columns = 10;
-
+    public int columns = 20;
+    public GameObject player;
+    private int tileLengthX = 20;
     // Use this for initialization
     void Start () {
 		
@@ -17,16 +17,26 @@ public class BoardManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
 
     public void CreateFloor()
     {
         
-        for (var i = 0; i < columns; i++) {
+        for (var i = -20; i < columns; i++) {
             GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
-
             Instantiate(toInstantiate, new Vector3(i, 0, 0f), Quaternion.identity);
+            tileLengthX = i;
         }
+    }
+
+    public void CreateOneFloor() {
+
+        //         var horzExtent = vertExtent * Screen.width / Screen.height;
+
+
+        GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
+        Instantiate(toInstantiate, new Vector3(tileLengthX, 0, 0f), Quaternion.identity);
+        tileLengthX++;
     }
 }
