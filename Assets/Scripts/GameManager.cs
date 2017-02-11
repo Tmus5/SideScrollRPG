@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     private BoardManager boardScript;
-
+    Transform transform;
     void Awake()
     {
         if (instance == null)
@@ -27,6 +27,6 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
 }
