@@ -77,23 +77,31 @@ public class Player : MonoBehaviour {
     {
         // change collision addition from + 15 to more approrpiate based on distance away, changed to that to show on initial start
         RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(transform.position.x + 15, 1));
-      
+
         if (hit.collider != null && speed != 0)
         {
             DecreaseSpeed();
         }
-        else if(hit.collider == null)
+        else if (hit.collider == null)
         {
             IncreaseSpeed();
         }
 
 
-        if (grounded && Input.GetButton("Jump")) {
+        if (grounded && Input.GetButton("Jump"))
+        {
             anim.SetBool("Ground", false);
             rigidbody.AddForce(new Vector2(0, jumpForce));
         }
 
-       
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            boardScript.CreateFloorOnClick();
+        }
+
+
     }
 
     void DecreaseSpeed()
