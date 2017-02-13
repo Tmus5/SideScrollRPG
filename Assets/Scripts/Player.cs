@@ -66,9 +66,6 @@ public class Player : MonoBehaviour {
             xOld = transform.position.x;
 
 
-       
-
-
         //}
 
     }
@@ -76,7 +73,8 @@ public class Player : MonoBehaviour {
     private void Update()
     {
         // change collision addition from + 15 to more approrpiate based on distance away, changed to that to show on initial start
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(transform.position.x + 15, 1));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 3f);
+        //Debug.DrawRay(transform.position, transform.right, Color.red);
 
         if (hit.collider != null && speed != 0)
         {
@@ -94,15 +92,25 @@ public class Player : MonoBehaviour {
             rigidbody.AddForce(new Vector2(0, jumpForce));
         }
 
-
-
         if (Input.GetMouseButtonDown(0))
         {
             boardScript.CreateFloorOnClick();
         }
 
+        if (Input.GetMouseButtonDown(1))
+        {
+            boardScript.DeleteTile();
+        }
 
+        //boardScript.SpawnEnemy();
+        
     }
+
+    private void OnMouseDown()
+    {
+       // not working for some reason
+    }
+
 
     void DecreaseSpeed()
     {

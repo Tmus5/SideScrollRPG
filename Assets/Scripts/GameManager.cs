@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     private BoardManager boardScript;
-    Transform transform;
+
     void Awake()
     {
         if (instance == null)
@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 
         boardScript = GetComponent<BoardManager>();
         boardScript.CreateFloor();
-
+        Destroy(boardScript);
 
     }
 

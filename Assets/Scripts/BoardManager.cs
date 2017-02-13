@@ -6,9 +6,11 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour {
 
-    public GameObject[] floorTiles;
+    public List<GameObject> floorTiles;
+    public List<GameObject> enemies;
+
     public int columns = 40;
-    public GameObject player;
+
     private int tileLengthX = 20;
     // Use this for initialization
     void Start() {
@@ -17,14 +19,13 @@ public class BoardManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        SpawnEnemy();
     }
 
     public void CreateFloor()
     {
-
         for (var i = -20; i < 20; i++) {
-            GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
+            GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Count)];
             Instantiate(toInstantiate, new Vector3(i, 0, 0f), Quaternion.identity);
             tileLengthX = i;
         }
@@ -38,38 +39,52 @@ public class BoardManager : MonoBehaviour {
         GameObject[] getCount;
         getCount = GameObject.FindGameObjectsWithTag("Ground");
 
+        // used several times break out into own method
         for (var i = getCount.Length; i < columns; i++) {
-            toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
+            toInstantiate = floorTiles[Random.Range(0, floorTiles.Count)];
             Instantiate(toInstantiate, new Vector3(tileLengthX, 0, 0f), Quaternion.identity);
             tileLengthX++;
 
         }
-
-
-        //if (tileLengthX % 20 == 0)
-        //{
-        //    toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
-        //    Instantiate(toInstantiate, new Vector3(tileLengthX, 1, 0f), Quaternion.identity);
-        //}
         //Debug.Log(tileLengthX);
-
     }
-
+    
+    private void SpawnEnemy() {
+        if (tileLengthX % 30 == 0)
+        {
+            GameObject toInstantiate = enemies[Random.Range(0, enemies.Count)];
+            Instantiate(toInstantiate, new Vector3(tileLengthX, 1, 0f), Quaternion.identity);
+        }
+    }
 
     public void CreateFloorOnClick()
     {
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        GameObject toInstantiate;
-        toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.origin);
 
-        //if (Physics.Raycast(ray))
+        if (!hit)
+        {
+            GameObject toInstantiate;
+            toInstantiate = floorTiles[Random.Range(0, floorTiles.Count)];
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Instantiate(toInstantiate, new Vector3((int)Math.Round(pos.x), (int)Math.Round(pos.y)), Quaternion.identity);
+            tileLengthX++;
+            columns++;
+        }
+    }
 
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        Instantiate(toInstantiate, new Vector3((int)Math.Ceiling(pos.x), (int)Math.Ceiling(pos.y)), Quaternion.identity);
-
-        //Instantiate(toInstantiate, new Vector3(tileLengthX, 3, 0f), Quaternion.identity);
-
+    public void DeleteTile() {
+        //Debug.DrawRay(cameraPos.origin, new Vector3(cameraPos.origin.x, cameraPos.origin.y - 10, 1), Color.red);
+        
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.origin);
+        if (hit)
+        {
+            Destroy(hit.transform.gameObject);
+            tileLengthX--;
+            columns--;
+        }
     }
 }
 
