@@ -44,7 +44,6 @@ public class BoardManager : MonoBehaviour {
             toInstantiate = floorTiles[Random.Range(0, floorTiles.Count)];
             Instantiate(toInstantiate, new Vector3(tileLengthX, 0, 0f), Quaternion.identity);
             tileLengthX++;
-
         }
         //Debug.Log(tileLengthX);
     }
@@ -73,8 +72,8 @@ public class BoardManager : MonoBehaviour {
             toInstantiate = enemies[Random.Range(0, enemies.Count)];
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Instantiate(toInstantiate, new Vector3((int)Math.Round(pos.x), (int)Math.Round(pos.y)), Quaternion.identity);
-            tileLengthX++;
-            columns++;
+            //tileLengthX++;
+            //columns++;
         }
     }
 
@@ -87,8 +86,8 @@ public class BoardManager : MonoBehaviour {
         if (hit)
         {
             Destroy(hit.transform.gameObject);
-            tileLengthX--;
-            columns--;
+            //tileLengthX--;
+            //columns--;
         }
     }
 }
