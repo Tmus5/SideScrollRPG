@@ -45,6 +45,7 @@ public class Player : MonoBehaviour {
 
         rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
 
+        boardScript.SpawnEnemy();
 
         //Debug.Log(rigidbody.velocity);
 
@@ -62,7 +63,7 @@ public class Player : MonoBehaviour {
         //{
 
         // stop creating if collided with enemy / object
-            boardScript.CreateOneFloor();
+        boardScript.CreateOneFloor();
             xOld = transform.position.x;
 
 
@@ -102,8 +103,7 @@ public class Player : MonoBehaviour {
             boardScript.DeleteTile();
         }
 
-        //boardScript.SpawnEnemy();
-        
+
     }
 
     private void OnMouseDown()
