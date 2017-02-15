@@ -13,6 +13,11 @@ public class Enemy : MonoBehaviour {
 
     //}
 
+    void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
 
-   
+
+
 }

@@ -53,6 +53,11 @@ public class BoardManager : MonoBehaviour {
         if (tileLengthX % 30 == 0 && !hasEnemySpawned)
         {
             GameObject toInstantiate = enemies[Random.Range(0, enemies.Count)];
+
+            Vector3 theScale = toInstantiate.transform.localScale;
+            theScale.x *= -1;
+            toInstantiate.transform.localScale = theScale;
+
             Instantiate(toInstantiate, new Vector3(tileLengthX, 1, 0f), Quaternion.identity);
             hasEnemySpawned = true;
         }
