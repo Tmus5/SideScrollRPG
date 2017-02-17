@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingObject : MonoBehaviour {
+public class Character : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -13,4 +13,9 @@ public class MovingObject : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    protected virtual void Attack()
+    {
+   
+    }
 }

@@ -2,13 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Player : MonoBehaviour {
+public class Player : Character {
+
+    /// <summary>
+    /// create class for player stats
+    /// </summary>
+
     public float speed = 0;//Don't touch this
     public float maxSpeed = 10f;
     public float acceleration = 1;//How fast will object reach a maximum speed
     public float  deceleration = 1;//How fast will object reach a speed of 0
 
+    private int playerHp = 100;
+    private int level = 1;
 
     bool facingRight = true;
     Animator anim;
@@ -18,17 +26,24 @@ public class Player : MonoBehaviour {
     public Transform groundCheck;
     float groundRadius = 0.2f;
     public LayerMask whatIsGround;
-    private Rigidbody2D rigidbody;
+    private new Rigidbody2D rigidbody;
+
     private BoardManager boardScript;
+    private UiManager uiScript;
 
     public float jumpForce = 700;
+    private Text levelText;
+    private Text hpText;
 
     // Use this for initialization
     void Start () {
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         boardScript = GetComponent<BoardManager>();
+        uiScript = GetComponent<UiManager>();
+
         xOld = transform.position.x;
+
     }
 
     // Update is called once per frame
@@ -46,7 +61,6 @@ public class Player : MonoBehaviour {
         rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
 
         boardScript.SpawnEnemy();
-
         //Debug.Log(rigidbody.velocity);
 
 
@@ -64,7 +78,7 @@ public class Player : MonoBehaviour {
 
         // stop creating if collided with enemy / object
         boardScript.CreateOneFloor();
-            xOld = transform.position.x;
+        xOld = transform.position.x;
 
 
         //}
@@ -77,6 +91,7 @@ public class Player : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 3f);
         //Debug.DrawRay(transform.position, transform.right, Color.red);
 
+
         if (hit.collider != null && speed != 0)
         {
             DecreaseSpeed();
@@ -84,6 +99,11 @@ public class Player : MonoBehaviour {
         else if (hit.collider == null)
         {
             IncreaseSpeed();
+        }
+
+        if (hit.collider != null && speed == 0)
+        {
+            Attack();
         }
 
 
@@ -103,13 +123,24 @@ public class Player : MonoBehaviour {
             boardScript.DeleteTile();
         }
 
+    }
+
+    protected override void Attack()
+    {
+        Debug.Log(playerHp);
+        playerHp--;
 
     }
+
+
+
 
     private void OnMouseDown()
     {
        // not working for some reason
     }
+
+  
 
 
     void DecreaseSpeed()
