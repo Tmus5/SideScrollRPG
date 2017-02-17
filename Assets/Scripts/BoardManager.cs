@@ -12,14 +12,26 @@ public class BoardManager : MonoBehaviour {
     public int columns = 40;
     private int tileLengthX = 20;
     private bool hasEnemySpawned = false;
+
     // Use this for initialization
     void Start() {
 
     }
 
-    // Update is called once per frame
-    void Update() {
-        //SpawnEnemy();
+    void FixedUpdate()
+    {
+        SpawnEnemy();
+        CreateOneFloor();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            CreateFloorOnClick();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            DeleteTile();
+        }
     }
 
     public void CreateFloor()

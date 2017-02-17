@@ -20,7 +20,6 @@ public class Player : Character {
 
     bool facingRight = true;
     Animator anim;
-    float xOld;
 
     bool grounded = false;
     public Transform groundCheck;
@@ -39,10 +38,10 @@ public class Player : Character {
     void Start () {
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
-        boardScript = GetComponent<BoardManager>();
-        uiScript = GetComponent<UiManager>();
+        //boardScript = GetComponent<BoardManager>();
+        //uiScript = GetComponent<UiManager>();
 
-        xOld = transform.position.x;
+        //xOld = transform.position.x;
 
     }
 
@@ -60,7 +59,7 @@ public class Player : Character {
 
         rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
 
-        boardScript.SpawnEnemy();
+        //boardScript.SpawnEnemy();
         //Debug.Log(rigidbody.velocity);
 
 
@@ -77,8 +76,8 @@ public class Player : Character {
         //{
 
         // stop creating if collided with enemy / object
-        boardScript.CreateOneFloor();
-        xOld = transform.position.x;
+        //boardScript.CreateOneFloor();
+        //xOld = transform.position.x;
 
 
         //}
@@ -113,15 +112,7 @@ public class Player : Character {
             rigidbody.AddForce(new Vector2(0, jumpForce));
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            boardScript.CreateFloorOnClick();
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            boardScript.DeleteTile();
-        }
+      
 
     }
 
@@ -146,7 +137,7 @@ public class Player : Character {
     void DecreaseSpeed()
     {
         if (speed > 0)
-            speed = speed - acceleration * Time.deltaTime;
+            speed = speed - deceleration * Time.deltaTime;
         else
             speed = 0;
     }

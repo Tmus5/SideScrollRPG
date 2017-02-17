@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 
         boardScript = GetComponent<BoardManager>();
         boardScript.CreateFloor();
-        Destroy(boardScript);
+        //Destroy(boardScript);
 
     }
 
