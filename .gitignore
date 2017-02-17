@@ -53,9 +53,9 @@ Temporary Items
 #
 /Library/
 /Temp/
-/*.csproj
-/*.unityproj
-/*.sln
-/*.userprefs
-/*.pidb
+.csproj
+.unityproj
+.sln
+.userprefs
+.pidb
 
