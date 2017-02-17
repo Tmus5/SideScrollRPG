@@ -47,10 +47,7 @@ Temporary Items
 .apdisk
 
 
-# Ignore the following files
-# --------------------------
-# Unity3D specific
-#
+
 /Library/
 /Temp/
 .csproj
