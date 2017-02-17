@@ -453,7 +453,7 @@ PlayerSettings:
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     UNet: 1
   cloudProjectId: 8d8d4714-6093-4a9a-8986-a52a0b9aa118
   projectName: SideScrollRPG
