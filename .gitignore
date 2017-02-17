@@ -51,14 +51,11 @@ Temporary Items
 # --------------------------
 # Unity3D specific
 #
-/Library/*
-/Temp/*
+/Library/
+/Temp/
 /*.csproj
 /*.unityproj
 /*.sln
 /*.userprefs
 /*.pidb
-
-# include meta files
-!*.*.meta
 
