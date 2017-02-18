@@ -15,7 +15,7 @@ public class BoardManager : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
+        
     }
 
     void FixedUpdate()
@@ -23,10 +23,10 @@ public class BoardManager : MonoBehaviour {
         SpawnEnemy();
         CreateOneFloor();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            CreateFloorOnClick();
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    CreateFloorOnClick();
+        //}
 
         if (Input.GetMouseButtonDown(1))
         {

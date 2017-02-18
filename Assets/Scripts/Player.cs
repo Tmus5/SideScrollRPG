@@ -2,9 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class Player : Character {
+
+    //public class Stats
+    //{
+    //    public int playerHp;
+    //    public int playerDmg;
+
+    //    public Stats()
+    //    {
+           
+    //    }
+    //}
 
     /// <summary>
     /// create class for player stats
@@ -13,10 +24,16 @@ public class Player : Character {
     public float speed = 0;//Don't touch this
     public float maxSpeed = 10f;
     public float acceleration = 1;//How fast will object reach a maximum speed
-    public float  deceleration = 1;//How fast will object reach a speed of 0
+    public float deceleration = 1;//How fast will object reach a speed of 0
+    public int playerHp = 1000;
+    public int playerDamage = 50;
 
-    private int playerHp = 100;
-    private int level = 1;
+    //public Stats stats = new Stats();
+
+    private int enemyDamageScaled = 1;
+
+    public int level = 1;
+    public bool isEnemyVisible = false;
 
     bool facingRight = true;
     Animator anim;
@@ -31,8 +48,8 @@ public class Player : Character {
     private UiManager uiScript;
 
     public float jumpForce = 700;
-    private Text levelText;
-    private Text hpText;
+
+    public Enemy currentEnemy;
 
     // Use this for initialization
     void Start () {
@@ -40,9 +57,8 @@ public class Player : Character {
         rigidbody = GetComponent<Rigidbody2D>();
         //boardScript = GetComponent<BoardManager>();
         //uiScript = GetComponent<UiManager>();
-
+        currentEnemy = new Enemy();
         //xOld = transform.position.x;
-
     }
 
     // Update is called once per frame
@@ -59,7 +75,6 @@ public class Player : Character {
 
         rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
 
-        //boardScript.SpawnEnemy();
         //Debug.Log(rigidbody.velocity);
 
 
@@ -93,6 +108,12 @@ public class Player : Character {
 
         if (hit.collider != null && speed != 0)
         {
+            if (!isEnemyVisible)
+            {
+                currentEnemy = hit.collider.gameObject.GetComponent<Enemy>();
+                isEnemyVisible = true;
+            }            
+
             DecreaseSpeed();
         }
         else if (hit.collider == null)
@@ -102,7 +123,8 @@ public class Player : Character {
 
         if (hit.collider != null && speed == 0)
         {
-            Attack();
+            currentEnemy = hit.collider.gameObject.GetComponent<Enemy>();
+            Attack(currentEnemy);
         }
 
 
@@ -116,13 +138,19 @@ public class Player : Character {
 
     }
 
-    protected override void Attack()
+    protected void Attack(Enemy enemy)
     {
-        Debug.Log(playerHp);
-        playerHp--;
+        playerHp = playerHp - enemy.enemyDamageBase + enemyDamageScaled;
+        enemy.enemyHealth = enemy.enemyHealth - playerDamage;
 
+        if (enemy.enemyHealth <= 0)
+           enemyDamageScaled = (int)Mathf.Log(level, 2f);
     }
 
+    public void Heal()
+    {
+        playerHp += 1000;
+    }
 
 
 

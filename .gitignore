@@ -56,3 +56,5 @@ Temporary Items
 .userprefs
 .pidb
 
+Assets/Scenes/Main.unity
+Assets/Prefabs/CharacterPrefabs/Enemies/BronzeKnight.prefab
