@@ -15,8 +15,11 @@ public class Player : Character {
     public float acceleration = 1;//How fast will object reach a maximum speed
     public float  deceleration = 1;//How fast will object reach a speed of 0
 
-    private int playerHp = 100;
-    private int level = 1;
+    public int playerHp = 1000;
+    public int playerDamage = 50;
+    public int level = 1;
+
+    public bool isEnemyVisible = false;
 
     bool facingRight = true;
     Animator anim;
@@ -31,8 +34,8 @@ public class Player : Character {
     private UiManager uiScript;
 
     public float jumpForce = 700;
-    private Text levelText;
-    private Text hpText;
+
+    public Enemy currentEnemy;
 
     // Use this for initialization
     void Start () {
@@ -40,9 +43,8 @@ public class Player : Character {
         rigidbody = GetComponent<Rigidbody2D>();
         //boardScript = GetComponent<BoardManager>();
         //uiScript = GetComponent<UiManager>();
-
+        currentEnemy = new Enemy();
         //xOld = transform.position.x;
-
     }
 
     // Update is called once per frame
@@ -59,7 +61,6 @@ public class Player : Character {
 
         rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
 
-        //boardScript.SpawnEnemy();
         //Debug.Log(rigidbody.velocity);
 
 
@@ -93,6 +94,12 @@ public class Player : Character {
 
         if (hit.collider != null && speed != 0)
         {
+            if (!isEnemyVisible)
+            {
+                currentEnemy = hit.collider.gameObject.GetComponent<Enemy>();
+                isEnemyVisible = true;
+            }            
+
             DecreaseSpeed();
         }
         else if (hit.collider == null)
@@ -102,7 +109,8 @@ public class Player : Character {
 
         if (hit.collider != null && speed == 0)
         {
-            Attack();
+            currentEnemy = hit.collider.gameObject.GetComponent<Enemy>();
+            Attack(currentEnemy);
         }
 
 
@@ -116,11 +124,16 @@ public class Player : Character {
 
     }
 
-    protected override void Attack()
+    protected void Attack(Enemy enemy)
     {
-        Debug.Log(playerHp);
-        playerHp--;
+        base.Attack();
+        //Debug.Log(playerHp);
+        playerHp = playerHp - enemy.enemyDamage;
+        playerHp = playerHp - enemy.enemyDamage;
+        enemy.enemyHealth = enemy.enemyHealth - playerDamage;
 
+        //    if (enemy.enemyHealth <= 0)
+        //        currentEnemy = null;
     }
 
 

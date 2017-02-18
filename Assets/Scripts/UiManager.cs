@@ -7,19 +7,19 @@ public class UiManager : MonoBehaviour {
 	
 	public int level = 1;
     public Text levelText;
-    public Text hpText;
+    public Text playerHpText;
+    public Text enemyHpText;
 
     private Player playerScript;
     private Enemy enemyScript;
-
 
     // Use this for initialization
     void Start () {
         //healthPoints = GameManager.instance;
         levelText.text = string.Format("Level: {0}", level);
-        levelText.text = string.Format("Level: {0}", level);
+        playerHpText.text = string.Format("Level: {0}", level);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        enemyScript = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+        //enemyScript = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
 
     }
 
@@ -27,4 +27,21 @@ public class UiManager : MonoBehaviour {
     void Update () {
 		
 	}
+
+    void FixedUpdate()
+    {
+        playerHpText.text = string.Format("{0}", playerScript.playerHp);
+
+        if (playerScript.isEnemyVisible) 
+            enemyHpText.text = string.Format("{0}", playerScript.currentEnemy.enemyHealth);
+        
+        
+        if (playerScript.isEnemyVisible && playerScript.currentEnemy.enemyHealth <= 0) {
+            level++;
+            playerScript.level = level;
+            levelText.text = string.Format("Level: {0}", level);
+        }
+
+
+    }
 }

@@ -15,7 +15,7 @@ public class BoardManager : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
+        
     }
 
     void FixedUpdate()

@@ -16,6 +16,6 @@ public class Character : MonoBehaviour {
 
     protected virtual void Attack()
     {
-   
+       
     }
 }
