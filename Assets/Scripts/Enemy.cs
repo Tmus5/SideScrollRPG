@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : Character {
     Animator anim;
     private Rigidbody2D rigidbody;
-    public int enemyDamage;
+    public int enemyDamageBase;
     public int enemyHealth = 1000;
     private Player playerScript;
 
@@ -32,8 +32,6 @@ public class Enemy : Character {
     {
         if (enemyHealth <= 0) {
             enemyHealth = 0;
-            enemyDamage = (int)Mathf.Log(enemyDamage, 2f);
-
             Destroy(gameObject);
             playerScript.isEnemyVisible = false;
 

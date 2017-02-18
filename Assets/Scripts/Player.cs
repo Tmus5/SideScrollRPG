@@ -2,9 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class Player : Character {
+
+    //public class Stats
+    //{
+    //    public int playerHp;
+    //    public int playerDmg;
+
+    //    public Stats()
+    //    {
+           
+    //    }
+    //}
 
     /// <summary>
     /// create class for player stats
@@ -13,12 +24,15 @@ public class Player : Character {
     public float speed = 0;//Don't touch this
     public float maxSpeed = 10f;
     public float acceleration = 1;//How fast will object reach a maximum speed
-    public float  deceleration = 1;//How fast will object reach a speed of 0
-
+    public float deceleration = 1;//How fast will object reach a speed of 0
     public int playerHp = 1000;
     public int playerDamage = 50;
-    public int level = 1;
 
+    //public Stats stats = new Stats();
+
+    private int enemyDamageScaled = 1;
+
+    public int level = 1;
     public bool isEnemyVisible = false;
 
     bool facingRight = true;
@@ -126,16 +140,17 @@ public class Player : Character {
 
     protected void Attack(Enemy enemy)
     {
-        base.Attack();
-        //Debug.Log(playerHp);
-        playerHp = playerHp - enemy.enemyDamage;
-        playerHp = playerHp - enemy.enemyDamage;
+        playerHp = playerHp - enemy.enemyDamageBase + enemyDamageScaled;
         enemy.enemyHealth = enemy.enemyHealth - playerDamage;
 
-        //    if (enemy.enemyHealth <= 0)
-        //        currentEnemy = null;
+        if (enemy.enemyHealth <= 0)
+           enemyDamageScaled = (int)Mathf.Log(level, 2f);
     }
 
+    public void Heal()
+    {
+        playerHp += 1000;
+    }
 
 
 

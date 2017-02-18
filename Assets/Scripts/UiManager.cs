@@ -20,7 +20,6 @@ public class UiManager : MonoBehaviour {
         playerHpText.text = string.Format("Level: {0}", level);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         //enemyScript = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
-
     }
 
     // Update is called once per frame
@@ -40,6 +39,8 @@ public class UiManager : MonoBehaviour {
             level++;
             playerScript.level = level;
             levelText.text = string.Format("Level: {0}", level);
+            enemyHpText.text = string.Format("{0}", "");
+
         }
 
 
