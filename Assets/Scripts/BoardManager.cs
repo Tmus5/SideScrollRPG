@@ -9,7 +9,7 @@ public class BoardManager : MonoBehaviour {
     public List<GameObject> floorTiles;
     public List<GameObject> enemies;
 
-    public int columns = 40;
+    public int columns = 41;
     private int tileLengthX = 20;
     private bool hasEnemySpawned = false;
 
