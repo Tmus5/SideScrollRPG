@@ -33,16 +33,12 @@ public class UiManager : MonoBehaviour {
 
         if (playerScript.isEnemyVisible) 
             enemyHpText.text = string.Format("{0}", playerScript.currentEnemy.enemyHealth);
-        
-        
+                
         if (playerScript.isEnemyVisible && playerScript.currentEnemy.enemyHealth <= 0) {
             level++;
             playerScript.level = level;
             levelText.text = string.Format("Level: {0}", level);
             enemyHpText.text = string.Format("{0}", "");
-
         }
-
-
     }
 }
