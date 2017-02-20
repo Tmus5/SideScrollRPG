@@ -27,10 +27,12 @@ public class Player : Character {
     public float deceleration = 1;//How fast will object reach a speed of 0
     public int playerHp = 1000;
     public int playerDamage = 50;
+	public int playerXP = 0;
 
     //public Stats stats = new Stats();
 
     private int enemyDamageScaled = 1;
+	private int enemyBaseXP = 10;
 
     public int level = 1;
     public bool isEnemyVisible = false;
@@ -143,14 +145,23 @@ public class Player : Character {
         playerHp = playerHp - enemy.enemyDamageBase + enemyDamageScaled;
         enemy.enemyHealth = enemy.enemyHealth - playerDamage;
 
-        if (enemy.enemyHealth <= 0)
-           enemyDamageScaled = (int)Mathf.Log(level, 2f);
+		if (enemy.enemyHealth <= 0) {
+			enemyDamageScaled = (int)Mathf.Log (level, 2f);
+			playerXP += enemyBaseXP + (2 * level);
+		}
     }
 
-    public void Heal()
+    public void HealInit()
     {
-        playerHp += 1000;
+		StartCoroutine(Heal());
     }
+
+	IEnumerator Heal() {
+		playerHp += 1000;
+		anim.SetBool ("Heal", true);
+		yield return new WaitForSeconds(1);
+		anim.SetBool ("Heal", false);
+	}
 
 
 

@@ -9,6 +9,7 @@ public class UiManager : MonoBehaviour {
     public Text levelText;
     public Text playerHpText;
     public Text enemyHpText;
+	public Text playerXP;
 
     private Player playerScript;
     private Enemy enemyScript;
@@ -30,6 +31,8 @@ public class UiManager : MonoBehaviour {
     void FixedUpdate()
     {
         playerHpText.text = string.Format("{0}", playerScript.playerHp);
+		playerXP.text = string.Format ("{0}", playerScript.playerXP);
+
 
         if (playerScript.isEnemyVisible) 
             enemyHpText.text = string.Format("{0}", playerScript.currentEnemy.enemyHealth);
