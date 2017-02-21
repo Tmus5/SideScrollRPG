@@ -160,15 +160,15 @@ public class Player : Character
 
     protected IEnumerator Attack(Enemy enemy)
     {
-        playerStats.Health = playerStats.Health - enemy.enemyDamageBase + enemyDamageScaled;
-        enemy.enemyHealth = enemy.enemyHealth - playerStats.Damage;
+        playerStats.Health = playerStats.Health - enemy.stats.Damage + enemyDamageScaled;
+        enemy.stats.Health = enemy.stats.Health - playerStats.Damage;
 
-        if (enemy.enemyHealth <= 0)
+        if (enemy.stats.Health <= 0)
         {
             // Heal animation to not affect character animation, create a second animation to overlay the current one
             // TODO use this to access any animations associated with the enemy, for example a death animation
             enemyDamageScaled = (int)Mathf.Log(level, 2f);
-            playerStats.Experience += enemy.enemyExperienceGain + (2 * level);
+            playerStats.Experience += enemy.stats.Experience + (2 * level);
             isEnemyAlive = false;
             anim.SetBool("isAttacking", false);
 

@@ -34,13 +34,14 @@ public class UiManager : MonoBehaviour {
 		playerXP.text = string.Format ("Experience: {0}", playerScript.playerStats.Experience);
 
         if (playerScript.isEnemyAlive)
-            enemyHpText.text = string.Format("Enemy: {0}", playerScript.currentEnemy.enemyHealth);
+            enemyHpText.text = string.Format("Enemy: {0}", playerScript.currentEnemy.stats.Health );
 
-        if (playerScript.currentEnemy.enemyHealth <= 0 && playerScript.speed == 0)
-            enemyHpText.text = string.Format("Enemy: {0}", "0");
+        if (playerScript.currentEnemy.stats != null)
+            if (playerScript.currentEnemy.stats.Health <= 0 && playerScript.speed == 0)
+                enemyHpText.text = string.Format("Enemy: {0}", "0");
 
 
-        if (playerScript.isEnemyDestroyed && playerScript.currentEnemy.enemyHealth <= 0) {
+        if (playerScript.isEnemyDestroyed && playerScript.currentEnemy.stats.Health <= 0) {
             level++;
             playerScript.level = level;
             levelText.text = string.Format("Level: {0}", level);

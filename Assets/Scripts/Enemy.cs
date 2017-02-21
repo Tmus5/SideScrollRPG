@@ -5,11 +5,18 @@ using UnityEngine;
 public class Enemy : Character {
     private Animator anim;
     private Rigidbody2D rigidbody;
-    public int enemyDamageBase;
-    public int enemyHealth = 1000;
-    public int enemyExperienceGain;
     private Player playerScript;
+    private  GameManager gameScript;
     private Coroutine coroutine;
+
+
+    public Dictionary<string, Stats> enemyStats = new Dictionary<string, Stats>()
+    {
+        { "BronzeKnight", new Stats { AttackSpeed = 10, Damage = 10, Experience = 100, Health = 1000 } },
+        { "SilverKnight", new Stats { AttackSpeed = 10, Damage = 15, Experience = 150, Health = 1200 } }
+    };
+
+    public Stats stats;
 
     // Use this for initialization
     void Start()
@@ -17,9 +24,13 @@ public class Enemy : Character {
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //playerScript.isEnemyDestroyed = false;
-        //playerScript.isEnemyAlive = true;
+        gameScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
+
+        string enemyName = gameObject.transform.name;
+        enemyName = enemyName.Contains("(") == true ? enemyName.Substring(0, enemyName.IndexOf('(')) : enemyName;
+
+        stats = enemyStats[enemyName];
 
     }
 
@@ -30,9 +41,9 @@ public class Enemy : Character {
 
     private void FixedUpdate()
     {
-        if (enemyHealth <= 0) {
-            enemyHealth = 0;
-            anim.SetInteger("Health", enemyHealth);
+        if (stats.Health <= 0) {
+            stats.Health = 0;
+            anim.SetInteger("Health", stats.Health);
 
 
             //yield new WaitForAnimation(anim);

@@ -12,10 +12,21 @@ public class BoardManager : MonoBehaviour {
     public int columns = 41;
     private int tileLengthX = 20;
     private bool hasEnemySpawned = false;
+    private object[] enemies2;
 
     // Use this for initialization
     void Start() {
-        
+        foreach (GameObject obj in Resources.LoadAll("EnemyPrefabs"))
+        {
+            enemies.Add(obj);
+        }
+
+        foreach (GameObject obj in Resources.LoadAll("FloorPrefabs"))
+        {
+            floorTiles.Add(obj);
+        }
+        CreateFloor();
+
     }
 
     void FixedUpdate()
@@ -33,7 +44,7 @@ public class BoardManager : MonoBehaviour {
             DeleteTile();
         }
     }
-
+    
     public void CreateFloor()
     {
         for (var i = -20; i < 20; i++) {
