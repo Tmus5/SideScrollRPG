@@ -62,7 +62,7 @@ public class BoardManager : MonoBehaviour {
     
     public void SpawnEnemy() {
 
-        if (tileLengthX % 30 == 0 && !hasEnemySpawned)
+        if (tileLengthX % 20 == 0 && !hasEnemySpawned)
         {
             GameObject toInstantiate = enemies[Random.Range(0, enemies.Count)];
 
@@ -73,7 +73,7 @@ public class BoardManager : MonoBehaviour {
             Instantiate(toInstantiate, new Vector3(tileLengthX, 1, 0f), Quaternion.identity);
             hasEnemySpawned = true;
         }
-        else if (!(tileLengthX % 30 == 0)) {
+        else if (!(tileLengthX % 20 == 0)) {
             hasEnemySpawned = false;
         }
     }

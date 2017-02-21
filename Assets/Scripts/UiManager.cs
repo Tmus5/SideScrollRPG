@@ -30,18 +30,22 @@ public class UiManager : MonoBehaviour {
 
     void FixedUpdate()
     {
-        playerHpText.text = string.Format("{0}", playerScript.playerHp);
-		playerXP.text = string.Format ("{0}", playerScript.playerXP);
+        playerHpText.text = string.Format("HP: {0}", playerScript.playerHp);
+		playerXP.text = string.Format ("Experience: {0}", playerScript.playerXP);
+
+        if (playerScript.isEnemyAlive)
+            enemyHpText.text = string.Format("Enemy: {0}", playerScript.currentEnemy.enemyHealth);
+
+        if (playerScript.currentEnemy.enemyHealth < 0)
+            enemyHpText.text = string.Format("Enemy: {0}", "0");
 
 
-        if (playerScript.isEnemyVisible) 
-            enemyHpText.text = string.Format("{0}", playerScript.currentEnemy.enemyHealth);
-                
-        if (playerScript.isEnemyVisible && playerScript.currentEnemy.enemyHealth <= 0) {
+        if (playerScript.isEnemyDestroyed && playerScript.currentEnemy.enemyHealth <= 0) {
             level++;
             playerScript.level = level;
             levelText.text = string.Format("Level: {0}", level);
             enemyHpText.text = string.Format("{0}", "");
+            playerScript.isEnemyDestroyed = false;
         }
     }
 }

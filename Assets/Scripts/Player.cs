@@ -32,10 +32,12 @@ public class Player : Character {
     //public Stats stats = new Stats();
 
     private int enemyDamageScaled = 1;
-	private int enemyBaseXP = 10;
+
+    // TODO setup proper scaling for xp and damage
+	private int enemyXpScaled = 1;
 
     public int level = 1;
-    public bool isEnemyVisible = false;
+    public bool isEnemyAlive = false;
 
     bool facingRight = true;
     Animator anim;
@@ -52,6 +54,8 @@ public class Player : Character {
     public float jumpForce = 700;
 
     public Enemy currentEnemy;
+    private Coroutine coroutine;
+    internal bool isEnemyDestroyed;
 
     // Use this for initialization
     void Start () {
@@ -110,11 +114,13 @@ public class Player : Character {
 
         if (hit.collider != null && speed != 0)
         {
-            if (!isEnemyVisible)
+            if (!isEnemyAlive)
             {
                 currentEnemy = hit.collider.gameObject.GetComponent<Enemy>();
-                isEnemyVisible = true;
-            }            
+                isEnemyDestroyed = false;
+                isEnemyAlive = true;
+            }
+
 
             DecreaseSpeed();
         }
@@ -126,7 +132,11 @@ public class Player : Character {
         if (hit.collider != null && speed == 0)
         {
             currentEnemy = hit.collider.gameObject.GetComponent<Enemy>();
-            Attack(currentEnemy);
+
+            if (coroutine == null && isEnemyAlive) {
+                anim.SetBool("isAttacking", true);
+                coroutine = StartCoroutine(Attack(currentEnemy));
+            }
         }
 
 
@@ -140,15 +150,25 @@ public class Player : Character {
 
     }
 
-    protected void Attack(Enemy enemy)
+    protected IEnumerator Attack(Enemy enemy)
     {
         playerHp = playerHp - enemy.enemyDamageBase + enemyDamageScaled;
         enemy.enemyHealth = enemy.enemyHealth - playerDamage;
 
-		if (enemy.enemyHealth <= 0) {
-			enemyDamageScaled = (int)Mathf.Log (level, 2f);
-			playerXP += enemyBaseXP + (2 * level);
-		}
+        if (enemy.enemyHealth <= 0)
+        {
+            // Heal animation to not affect character animation, create a second animation to overlay the current one
+            // TODO use this to access any animations associated with the enemy, for example a death animation
+            enemyDamageScaled = (int)Mathf.Log(level, 2f);
+            playerXP += enemy.enemyExperienceGain + (2 * level);
+            isEnemyAlive = false;
+            anim.SetBool("isAttacking", false);
+
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        coroutine = null;
+
     }
 
     public void HealInit()
@@ -159,8 +179,8 @@ public class Player : Character {
 	IEnumerator Heal() {
 		playerHp += 1000;
 		anim.SetBool ("Heal", true);
-		yield return new WaitForSeconds(1);
-		anim.SetBool ("Heal", false);
+        yield return new WaitForSeconds(1);
+        anim.SetBool ("Heal", false);
 	}
 
 
