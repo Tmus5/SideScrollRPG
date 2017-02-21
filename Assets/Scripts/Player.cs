@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Player : Character {
+public class Player : Character
+{
 
     //public class Stats
     //{
@@ -13,28 +14,29 @@ public class Player : Character {
 
     //    public Stats()
     //    {
-           
+
     //    }
     //}
 
     /// <summary>
     /// create class for player stats
     /// </summary>
+    /// 
+    public Stats playerStats = new Stats();
+
 
     public float speed = 0;//Don't touch this
     public float maxSpeed = 10f;
     public float acceleration = 1;//How fast will object reach a maximum speed
     public float deceleration = 1;//How fast will object reach a speed of 0
-    public int playerHp = 1000;
-    public int playerDamage = 50;
-	public int playerXP = 0;
+
 
     //public Stats stats = new Stats();
 
     private int enemyDamageScaled = 1;
 
     // TODO setup proper scaling for xp and damage
-	private int enemyXpScaled = 1;
+    private int enemyXpScaled = 1;
 
     public int level = 1;
     public bool isEnemyAlive = false;
@@ -58,17 +60,22 @@ public class Player : Character {
     internal bool isEnemyDestroyed;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         //boardScript = GetComponent<BoardManager>();
         //uiScript = GetComponent<UiManager>();
         currentEnemy = new Enemy();
         //xOld = transform.position.x;
+        playerStats.Damage = 50;
+        playerStats.Health = 1000;
+        playerStats.Experience = 0;
     }
 
     // Update is called once per frame
-    void FixedUpdate () {
+    void FixedUpdate()
+    {
 
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         //float move = Input.GetAxis("Horizontal");
@@ -133,7 +140,8 @@ public class Player : Character {
         {
             currentEnemy = hit.collider.gameObject.GetComponent<Enemy>();
 
-            if (coroutine == null && isEnemyAlive) {
+            if (coroutine == null && isEnemyAlive)
+            {
                 anim.SetBool("isAttacking", true);
                 coroutine = StartCoroutine(Attack(currentEnemy));
             }
@@ -146,21 +154,21 @@ public class Player : Character {
             rigidbody.AddForce(new Vector2(0, jumpForce));
         }
 
-      
+
 
     }
 
     protected IEnumerator Attack(Enemy enemy)
     {
-        playerHp = playerHp - enemy.enemyDamageBase + enemyDamageScaled;
-        enemy.enemyHealth = enemy.enemyHealth - playerDamage;
+        playerStats.Health = playerStats.Health - enemy.enemyDamageBase + enemyDamageScaled;
+        enemy.enemyHealth = enemy.enemyHealth - playerStats.Damage;
 
         if (enemy.enemyHealth <= 0)
         {
             // Heal animation to not affect character animation, create a second animation to overlay the current one
             // TODO use this to access any animations associated with the enemy, for example a death animation
             enemyDamageScaled = (int)Mathf.Log(level, 2f);
-            playerXP += enemy.enemyExperienceGain + (2 * level);
+            playerStats.Experience += enemy.enemyExperienceGain + (2 * level);
             isEnemyAlive = false;
             anim.SetBool("isAttacking", false);
 
@@ -173,24 +181,25 @@ public class Player : Character {
 
     public void HealInit()
     {
-		StartCoroutine(Heal());
+        StartCoroutine(Heal());
     }
 
-	IEnumerator Heal() {
-		playerHp += 1000;
-		anim.SetBool ("Heal", true);
+    IEnumerator Heal()
+    {
+        playerStats.Health += 1000;
+        anim.SetBool("Heal", true);
         yield return new WaitForSeconds(1);
-        anim.SetBool ("Heal", false);
-	}
+        anim.SetBool("Heal", false);
+    }
 
 
 
     private void OnMouseDown()
     {
-       // not working for some reason
+        // not working for some reason
     }
 
-  
+
 
 
     void DecreaseSpeed()
@@ -224,7 +233,8 @@ public class Player : Character {
         //transform.position.x = transform.position.x + speed * Time.deltaTime;
     }
 
-    public void Flip() {
+    public void Flip()
+    {
         facingRight = !facingRight;
 
         Vector3 theScale = transform.localScale;
