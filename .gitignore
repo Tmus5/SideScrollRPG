@@ -48,13 +48,9 @@ Temporary Items
 
 
 
-/Library/
-/Temp/
+/Library
+/Temp
 .csproj
 .unityproj
-.sln
-.userprefs
-.pidb
 
-Assets/Scenes/Main.unity
-Assets/Prefabs/CharacterPrefabs/Enemies/BronzeKnight.prefab
+.userprefs
