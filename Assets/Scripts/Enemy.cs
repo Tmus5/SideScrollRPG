@@ -11,7 +11,6 @@ public class Enemy : Character {
     private Player playerScript;
     private Coroutine coroutine;
 
-
     // Use this for initialization
     void Start()
     {

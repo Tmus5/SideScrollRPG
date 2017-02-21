@@ -30,13 +30,13 @@ public class UiManager : MonoBehaviour {
 
     void FixedUpdate()
     {
-        playerHpText.text = string.Format("HP: {0}", playerScript.playerHp);
-		playerXP.text = string.Format ("Experience: {0}", playerScript.playerXP);
+        playerHpText.text = string.Format("HP: {0}", playerScript.playerStats.Health);
+		playerXP.text = string.Format ("Experience: {0}", playerScript.playerStats.Experience);
 
         if (playerScript.isEnemyAlive)
             enemyHpText.text = string.Format("Enemy: {0}", playerScript.currentEnemy.enemyHealth);
 
-        if (playerScript.currentEnemy.enemyHealth < 0)
+        if (playerScript.currentEnemy.enemyHealth <= 0 && playerScript.speed == 0)
             enemyHpText.text = string.Format("Enemy: {0}", "0");
 
 

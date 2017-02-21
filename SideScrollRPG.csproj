@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\GroundScript.cs" />
     <Compile Include="Assets\Scripts\Loader.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Stats.cs" />
     <Compile Include="Assets\Scripts\UiManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
