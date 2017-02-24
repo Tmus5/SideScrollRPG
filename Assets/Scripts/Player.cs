@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class Player : Character
 {
@@ -30,6 +30,16 @@ public class Player : Character
     public float acceleration = 1;//How fast will object reach a maximum speed
     public float deceleration = 1;//How fast will object reach a speed of 0
 
+
+
+    public Slider playerHp;
+    public Slider enemyHp;
+
+    public Text levelText;
+    public Text playerHpText;
+    public Text playerXP;
+
+    public Text enemyHpText;
 
     //public Stats stats = new Stats();
 
@@ -65,12 +75,24 @@ public class Player : Character
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         //boardScript = GetComponent<BoardManager>();
-        //uiScript = GetComponent<UiManager>();
+        uiScript = GetComponent<UiManager>();
         currentEnemy = new Enemy();
         //xOld = transform.position.x;
         playerStats.Damage = 50;
         playerStats.Health = 1000;
         playerStats.Experience = 0;
+        playerStats.MaxHealth = 1000;
+
+        playerHpText.text = string.Format("{0} / {1}", playerStats.Health, playerStats.MaxHealth);
+        playerXP.text = string.Format("{0}", 0);
+
+        playerHp.maxValue = playerStats.Health;
+        playerHp.minValue = 0;
+        playerHp.value = playerStats.Health;
+
+        enemyHp.gameObject.SetActive(false);
+
+
     }
 
     // Update is called once per frame
@@ -119,7 +141,6 @@ public class Player : Character
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 3f);
         //Debug.DrawRay(transform.position, transform.right, Color.red);
 
-
         if (hit.collider != null && speed != 0)
         {
             if (!isEnemyAlive)
@@ -127,12 +148,20 @@ public class Player : Character
                 currentEnemy = hit.collider.gameObject.GetComponent<Enemy>();
                 isEnemyDestroyed = false;
                 isEnemyAlive = true;
+                enemyHpText.text = string.Format("{0} / {1}", currentEnemy.stats.Health, currentEnemy.stats.MaxHealth);
+
+                enemyHp.maxValue = currentEnemy.stats.Health;
+                enemyHp.minValue = 0;
+                enemyHp.value = currentEnemy.stats.Health;
+                enemyHp.gameObject.SetActive(true);
             }
 
             DecreaseSpeed();
         }
         else if (hit.collider == null)
         {
+            enemyHp.gameObject.SetActive(false);
+
             IncreaseSpeed();
         }
 
@@ -159,6 +188,8 @@ public class Player : Character
         playerStats.Health = playerStats.Health - enemy.stats.Damage + enemyDamageScaled;
         enemy.stats.Health = enemy.stats.Health - playerStats.Damage;
 
+        UpdateUiText();
+
         if (enemy.stats.Health <= 0)
         {
             // Heal animation to not affect character animation, create a second animation to overlay the current one
@@ -172,6 +203,19 @@ public class Player : Character
         coroutine = null;
     }
 
+    public void UpdateUiText() {
+        playerHpText.text = string.Format("{0} / {1}", playerStats.Health, playerStats.MaxHealth);
+        enemyHpText.text = string.Format("{0} / {1}", currentEnemy.stats.Health, currentEnemy.stats.MaxHealth);
+
+        playerHp.value = playerStats.Health;
+        enemyHp.value = currentEnemy.stats.Health;
+
+        if (currentEnemy.stats.Health <= 0) {
+            playerXP.text = string.Format("Experience: {0}", playerStats.Experience);
+            levelText.text = string.Format("Level: {0}", level);
+        }
+    }
+
     public void HealInit()
     {
         StartCoroutine(Heal());
@@ -179,7 +223,11 @@ public class Player : Character
 
     IEnumerator Heal()
     {
-        playerStats.Health += 1000;
+        if(playerStats.Health > playerStats.MaxHealth )
+            playerStats.Health += 1000;
+        else
+            playerStats.Health = playerStats.MaxHealth;
+
         anim.SetBool("Heal", true);
         yield return new WaitForSeconds(1);
         anim.SetBool("Heal", false);

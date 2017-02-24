@@ -18,33 +18,35 @@ public class UiManager : MonoBehaviour {
     void Start () {
         //healthPoints = GameManager.instance;
         levelText.text = string.Format("Level: {0}", level);
-        playerHpText.text = string.Format("Level: {0}", level);
+        playerHpText.text = string.Format("{0}", "");
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //enemyScript = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
-    }
+        playerHpText.text = string.Format("Level: {0}", level);
 
-    // Update is called once per frame
-    void Update () {
+
+    //enemyScript = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+}
+
+// Update is called once per frame
+void Update () {
 		
 	}
 
     void FixedUpdate()
     {
-        playerHpText.text = string.Format("HP: {0}", playerScript.playerStats.Health);
-		playerXP.text = string.Format ("Experience: {0}", playerScript.playerStats.Experience);
+        //if(string.IsNullOrEmpty(playerMaxHpText.text))
+        //    playerMaxHpText.text = string.Format("{0}", playerScript.playerStats.MaxHealth);
 
-        if (playerScript.isEnemyAlive)
-            enemyHpText.text = string.Format("Enemy: {0}", playerScript.currentEnemy.stats.Health );
+        //if (playerScript.isEnemyAlive)
+        //    enemyHpText.text = string.Format("Enemy: {0}", playerScript.currentEnemy.stats.Health );
 
-        if (playerScript.currentEnemy.stats != null)
-            if (playerScript.currentEnemy.stats.Health <= 0 && playerScript.speed == 0)
-                enemyHpText.text = string.Format("Enemy: {0}", "0");
+        //if (playerScript.currentEnemy.stats != null)
+        //    if (playerScript.currentEnemy.stats.Health <= 0 && playerScript.speed == 0)
+        //        enemyHpText.text = string.Format("Enemy: {0}", "0");
 
 
         if (playerScript.isEnemyDestroyed && playerScript.currentEnemy.stats.Health <= 0) {
             level++;
             playerScript.level = level;
-            levelText.text = string.Format("Level: {0}", level);
             enemyHpText.text = string.Format("{0}", "");
             playerScript.isEnemyDestroyed = false;
         }

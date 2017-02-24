@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : Character {
     private Animator anim;
@@ -12,8 +13,8 @@ public class Enemy : Character {
 
     public Dictionary<string, Stats> enemyStats = new Dictionary<string, Stats>()
     {
-        { "BronzeKnight", new Stats { AttackSpeed = 10, Damage = 10, Experience = 100, Health = 1000 } },
-        { "SilverKnight", new Stats { AttackSpeed = 10, Damage = 15, Experience = 150, Health = 1200 } }
+        { "BronzeKnight", new Stats { AttackSpeed = 10, Damage = 10, Experience = 100, Health = 1000, MaxHealth = 1000 } },
+        { "SilverKnight", new Stats { AttackSpeed = 10, Damage = 15, Experience = 150, Health = 1200,  MaxHealth = 1200 } }
     };
 
     public Stats stats;
@@ -32,6 +33,8 @@ public class Enemy : Character {
 
         stats = enemyStats[enemyName];
 
+
+      
     }
 
     void OnBecameInvisible()
@@ -57,6 +60,20 @@ public class Enemy : Character {
 
 
         }      
+    }
+
+    private void Update()
+    {
+        //playerHpText.text = string.Format("{0} / {1}", playerStats.Health, playerStats.MaxHealth);
+
+
+        //if (currentEnemy.stats.Health <= 0)
+        //{
+        //    playerXP.text = string.Format("Experience: {0}", playerStats.Experience);
+        //    levelText.text = string.Format("Level: {0}", level);
+        //}
+
+
     }
 
     IEnumerator Death()
