@@ -112,6 +112,7 @@ public class Player : Character
 
     }
 
+
     private void Update()
     {
         // change collision addition from + 15 to more approrpiate based on distance away, changed to that to show on initial start
@@ -127,7 +128,6 @@ public class Player : Character
                 isEnemyDestroyed = false;
                 isEnemyAlive = true;
             }
-
 
             DecreaseSpeed();
         }
@@ -147,15 +147,11 @@ public class Player : Character
             }
         }
 
-
-        if (grounded && Input.GetButton("Jump"))
-        {
-            anim.SetBool("Ground", false);
-            rigidbody.AddForce(new Vector2(0, jumpForce));
-        }
-
-
-
+        //if (grounded && Input.GetButton("Jump"))
+        //{
+        //    anim.SetBool("Ground", false);
+        //    rigidbody.AddForce(new Vector2(0, jumpForce));
+        //}   
     }
 
     protected IEnumerator Attack(Enemy enemy)
@@ -166,17 +162,14 @@ public class Player : Character
         if (enemy.stats.Health <= 0)
         {
             // Heal animation to not affect character animation, create a second animation to overlay the current one
-            // TODO use this to access any animations associated with the enemy, for example a death animation
             enemyDamageScaled = (int)Mathf.Log(level, 2f);
             playerStats.Experience += enemy.stats.Experience + (2 * level);
             isEnemyAlive = false;
             anim.SetBool("isAttacking", false);
-
         }
 
         yield return new WaitForSeconds(0.5f);
         coroutine = null;
-
     }
 
     public void HealInit()
@@ -191,16 +184,7 @@ public class Player : Character
         yield return new WaitForSeconds(1);
         anim.SetBool("Heal", false);
     }
-
-
-
-    private void OnMouseDown()
-    {
-        // not working for some reason
-    }
-
-
-
+    
 
     void DecreaseSpeed()
     {
@@ -214,23 +198,6 @@ public class Player : Character
     {
         if (speed < maxSpeed)
             speed = speed + acceleration * Time.deltaTime;
-        //else
-
-
-
-        //Debug.Log(speed);
-
-        //else if (speed > - maxSpeed)
-        //    speed = speed + acceleration * Time.deltaTime;
-        //else
-        //{
-        //    if (speed > deceleration * Time.deltaTime) 
-        // speed = speed - deceleration * Time.deltaTime;
-        // else if (speed < -deceleration * Time.deltaTime) 
-        //     speed = speed + deceleration * Time.deltaTime;
-        // else speed = 0;
-        //}
-        //transform.position.x = transform.position.x + speed * Time.deltaTime;
     }
 
     public void Flip()
@@ -240,10 +207,5 @@ public class Player : Character
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-        //transform.LookAt(0, 0, rigidbody.transform.position.z);
-
-
-
-        //transform.position = new Vector3(transform.position.x, 1, 1);
     }
 }
