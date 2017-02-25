@@ -6,22 +6,6 @@ using UnityEngine.UI;
 
 public class Player : Character
 {
-
-    //public class Stats
-    //{
-    //    public int playerHp;
-    //    public int playerDmg;
-
-    //    public Stats()
-    //    {
-
-    //    }
-    //}
-
-    /// <summary>
-    /// create class for player stats
-    /// </summary>
-    /// 
     public Stats playerStats = new Stats();
 
 
@@ -29,7 +13,6 @@ public class Player : Character
     public float maxSpeed = 10f;
     public float acceleration = 1;//How fast will object reach a maximum speed
     public float deceleration = 1;//How fast will object reach a speed of 0
-
 
 
     public Slider playerHp;
@@ -52,7 +35,9 @@ public class Player : Character
     public bool isEnemyAlive = false;
 
     bool facingRight = true;
-    Animator anim;
+    public Animator anim;
+
+    public GameObject obj;
 
     bool grounded = false;
     public Transform groundCheck;
@@ -91,8 +76,6 @@ public class Player : Character
         playerHp.value = playerStats.Health;
 
         enemyHp.gameObject.SetActive(false);
-
-
     }
 
     // Update is called once per frame
@@ -216,25 +199,23 @@ public class Player : Character
         }
     }
 
-    public void HealInit()
-    {
-        StartCoroutine(Heal());
-    }
+   
 
-    IEnumerator Heal()
+    IEnumerator DisableHeal()
     {
-        if((playerStats.Health + 1000) > playerStats.MaxHealth )
+        if ((playerStats.Health + 1000) > playerStats.MaxHealth)
             playerStats.Health = playerStats.MaxHealth;
         else
             playerStats.Health += 1000;
 
         playerHpText.text = string.Format("{0} / {1}", playerStats.Health, playerStats.MaxHealth);
+        playerHp.value = playerStats.Health;
 
         anim.SetBool("Heal", true);
         yield return new WaitForSeconds(1);
         anim.SetBool("Heal", false);
     }
-    
+
 
     void DecreaseSpeed()
     {
