@@ -188,7 +188,6 @@ public class Player : Character
         playerStats.Health = playerStats.Health - enemy.stats.Damage + enemyDamageScaled;
         enemy.stats.Health = enemy.stats.Health - playerStats.Damage;
 
-        UpdateUiText();
 
         if (enemy.stats.Health <= 0)
         {
@@ -198,6 +197,7 @@ public class Player : Character
             isEnemyAlive = false;
             anim.SetBool("isAttacking", false);
         }
+        UpdateUiText();
 
         yield return new WaitForSeconds(0.5f);
         coroutine = null;
@@ -223,10 +223,12 @@ public class Player : Character
 
     IEnumerator Heal()
     {
-        if(playerStats.Health > playerStats.MaxHealth )
-            playerStats.Health += 1000;
-        else
+        if((playerStats.Health + 1000) > playerStats.MaxHealth )
             playerStats.Health = playerStats.MaxHealth;
+        else
+            playerStats.Health += 1000;
+
+        playerHpText.text = string.Format("{0} / {1}", playerStats.Health, playerStats.MaxHealth);
 
         anim.SetBool("Heal", true);
         yield return new WaitForSeconds(1);
