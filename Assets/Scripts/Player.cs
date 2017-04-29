@@ -74,7 +74,7 @@ public class Player : Character
         playerHp.maxValue = playerStats.Health;
         playerHp.minValue = 0;
         playerHp.value = playerStats.Health;
-
+        isEnemyAlive = false;
         enemyHp.gameObject.SetActive(false);
     }
 
@@ -144,7 +144,6 @@ public class Player : Character
         else if (hit.collider == null)
         {
             enemyHp.gameObject.SetActive(false);
-
             IncreaseSpeed();
         }
 

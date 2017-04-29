@@ -59,31 +59,26 @@ public class Spells : MonoBehaviour {
         yield return new WaitForSeconds(1);
         player.anim.SetBool("Heal", false);
 
-        InitSpellTimeout();
+        yield return InitSpellTimeout();
 
 
     }
 
-    private void InitSpellTimeout() {
+    private IEnumerator InitSpellTimeout() {
 
 
-        while (countDownValue != 0)
-            StartCoroutine(Timeout());
+        while (countDownValue != 1)
+            yield return StartCoroutine(Timeout());
 
         spell = null;
         healButton.enabled = true;
         healButton.GetComponentInChildren<Text>().text = string.Empty;
-
     }
 
     IEnumerator Timeout() {
-
         countDownValue--;
         healButton.GetComponentInChildren<Text>().text = countDownValue.ToString();
-
-        yield return new WaitForSeconds(1);
-
-
+        yield return new WaitForSeconds(1);        
     }
 
 }
