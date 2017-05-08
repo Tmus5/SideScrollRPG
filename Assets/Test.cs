@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class TestSCript : ScriptableObject
+public class Test : ScriptableObject
 {
     [MenuItem("Tools/MyTool/Do It in C#")]
     static void DoIt()
