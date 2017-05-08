@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Spells.cs" />
+    <Compile Include="Assets\Scripts\TestSCript.cs" />
     <Compile Include="Assets\Scripts\UiManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
